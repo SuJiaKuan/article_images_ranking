@@ -156,3 +156,6 @@ tags
 
 # Default paths to generated files / folders
 /output
+
+# Path to static data
+/data
