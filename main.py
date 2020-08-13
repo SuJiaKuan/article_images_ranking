@@ -105,12 +105,17 @@ def main(args):
     for article_idx, article in enumerate(articles):
         out_dir = os.path.join(args.output, str(article_idx))
 
-        result = rank_article_images(
-            article,
-            image_captioning,
-            sentence_encoder,
-            out_dir,
-        )
+        try:
+            result = rank_article_images(
+                article,
+                image_captioning,
+                sentence_encoder,
+                out_dir,
+            )
+        except Exception as e:
+            print('Fail to rank article {} due to error: {}'
+                  .format(article_idx, e))
+            continue
 
         print('==== Ranking for article {} ===='.format(article_idx))
         print('Title: {}'.format(result['title']))
