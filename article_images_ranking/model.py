@@ -1,4 +1,11 @@
+import tensorflow_hub as hub
+import tensorflow_text
+
 from CaptionGenerator import CaptionGenerator
+
+
+_SENTENCE_EMBEDDING_MODEL = \
+    'https://tfhub.dev/google/universal-sentence-encoder-multilingual/3'
 
 
 class ImageCaptioning(object):
@@ -26,3 +33,12 @@ class ImageCaptioning(object):
             sentences.append((beam_size, sentence))
 
         return sentences
+
+
+class SentenceEncoder(object):
+
+    def __init__(self):
+        self._encoder = hub.load(_SENTENCE_EMBEDDING_MODEL)
+
+    def encode(self, sentence):
+        return self._encoder(sentence)[0]
