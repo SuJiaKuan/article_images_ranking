@@ -55,3 +55,11 @@ export PYTHONPATH=${PYTHONPATH}:third_party/chainer-caption/code
 ```bash
 python3 main.py examples/articles.json
 ```
+
+## TODO
+
+- [ ] Test for for articles (e.g., 滷肉飯)
+- [ ] Check and handle different image types of image files (e.g., png)
+- [ ] Skip invalid images, such as small logo, empty images
+- [ ] Different beam sizes for image captioning and similary comparision
+- [ ] Enable GPU
