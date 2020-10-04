@@ -69,7 +69,13 @@ def rank_article_images(
             out_dir,
             '{}.{}'.format(image_idx, image_url.extension),
         )
-        download_file(image_url.url, image_path)
+
+        try:
+            download_file(image_url.url, image_path)
+        except Exception as e:
+            print('Skip the url because error: {}'.format(e))
+            print(image_url.url)
+            continue
 
         sentences = image_captioning.generate(image_path)
         # TODO (SuJiaKuan):
