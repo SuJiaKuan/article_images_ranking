@@ -67,9 +67,9 @@ def rank_article_images(
         # 2. Skip invalid images, such as small logo, empty images.
         image_path = os.path.join(
             out_dir,
-            '{}.jpg'.format(image_idx),
+            '{}.{}'.format(image_idx, image_url.extension),
         )
-        download_file(image_url, image_path)
+        download_file(image_url.url, image_path)
 
         sentences = image_captioning.generate(image_path)
         # TODO (SuJiaKuan):

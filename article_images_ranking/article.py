@@ -3,11 +3,42 @@ import json
 from article_images_ranking.io import load_jsonl
 
 
+_IMAGE_EXTENSION_MAPPING = {
+    '.jpg': 'jpg',
+    '.jpeg': 'jpg',
+    '.png': 'png',
+    '.gif': 'gif',
+}
+
+
+class ImageUrl(object):
+
+    def __init__(self, url):
+        self._url = url
+
+        self._extension = self._parse_extension(self._url)
+
+    @property
+    def url(self):
+        return self._url
+
+    @property
+    def extension(self):
+        return self._extension
+
+    def _parse_extension(self, url):
+        for extension_str, extension in _IMAGE_EXTENSION_MAPPING.items():
+            if extension_str in url:
+                return extension
+
+        raise ValueError('No supported image extension for {}'.foramt(url))
+
+
 class Article(object):
 
     def __init__(self, title, image_urls):
         self._title = title
-        self._image_urls = image_urls
+        self._image_urls = [ImageUrl(u) for u in image_urls]
 
     @property
     def title(self):
