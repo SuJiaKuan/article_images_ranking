@@ -1,4 +1,10 @@
+import math
+
 import numpy as np
+
+
+def is_nan(x):
+    return isinstance(x, float) and math.isnan(x)
 
 
 def cal_cosine(x, y):

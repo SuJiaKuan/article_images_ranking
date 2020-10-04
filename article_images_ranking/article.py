@@ -1,6 +1,9 @@
 import json
 
+import pandas as pd
+
 from article_images_ranking.io import load_jsonl
+from article_images_ranking.math import is_nan
 
 
 _IMAGE_EXTENSION_MAPPING = {
@@ -56,6 +59,9 @@ class Article(object):
 def load_articles(data_path):
     if data_path.endswith('.json'):
         raw_articles = load_jsonl(data_path)
+    elif data_path.endswith('.csv'):
+        raw_articles = pd.read_csv(data_path)
+        raw_articles = [a for _, a in raw_articles.iterrows()]
     else:
         raise ValueError('Non-Supported data type: {}'.foramt(data_path))
 
@@ -63,11 +69,15 @@ def load_articles(data_path):
 
     for raw_article in raw_articles:
         title = raw_article['title']
-        image_urls = [
-            im['url']
-            for im
-            in json.loads(raw_article.get('image_links', '[]'))
-        ]
+
+        if 'image_links' not in raw_article:
+            image_links = '[]'
+        elif is_nan(raw_article['image_links']):
+            image_links = '[]'
+        else:
+            image_links = raw_article['image_links']
+        image_urls = [im['url'] for im in json.loads(image_links)]
+
         articles.append(Article(title, image_urls))
 
     return articles
