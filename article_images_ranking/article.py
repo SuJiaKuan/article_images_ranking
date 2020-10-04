@@ -14,8 +14,9 @@ _IMAGE_EXTENSION_MAPPING = {
 class ImageUrl(object):
 
     def __init__(self, url):
-        self._url = url
+        self._original_url = url
 
+        self._url = self._correct_url(self._original_url)
         self._extension = self._parse_extension(self._url)
 
     @property
@@ -25,6 +26,9 @@ class ImageUrl(object):
     @property
     def extension(self):
         return self._extension
+
+    def _correct_url(self, url):
+        return 'https:{}'.format(url) if url.startswith('//') else url
 
     def _parse_extension(self, url):
         for extension_str, extension in _IMAGE_EXTENSION_MAPPING.items():
