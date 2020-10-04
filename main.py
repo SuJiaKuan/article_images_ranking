@@ -79,7 +79,7 @@ def rank_article_images(
         sentence_vector = sentence_encoder.encode(sentence)
         similarity = cal_cosine(title_vector, sentence_vector)
 
-        scores.append((image_path, sentence, similarity))
+        scores.append((image_path, image_url.url, sentence, similarity))
 
     scores = sorted(scores, key=lambda r: r[2], reverse=True)
 
