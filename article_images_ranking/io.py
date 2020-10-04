@@ -13,9 +13,9 @@ def load_jsonl(file_path):
     return data
 
 
-def save_json(obj, file_path, encoding='utf-8'):
+def save_json(obj, file_path, encoding='utf-8', indent=4):
     with open(file_path, 'w', encoding=encoding) as f:
-        json.dump(obj, f, ensure_ascii=False)
+        json.dump(obj, f, ensure_ascii=False, indent=indent)
 
 
 def mkdir_p(dir_path):
