@@ -1,9 +1,9 @@
 import argparse
-import json
 import os
 
+from article_images_ranking.article import load_articles
 from article_images_ranking.io import download_file
-from article_images_ranking.io import load_jsonl
+from article_images_ranking.io import mkdir_p
 from article_images_ranking.io import save_json
 from article_images_ranking.math import cal_cosine
 from article_images_ranking.model import ImageCaptioning
@@ -58,13 +58,10 @@ def rank_article_images(
     sentence_encoder,
     out_dir,
 ):
-    title = article['title']
-    image_urls = [im['url'] for im in json.loads(article['image_links'])]
-
-    title_vector = sentence_encoder.encode(title)
+    title_vector = sentence_encoder.encode(article.title)
 
     scores = []
-    for image_idx, image_url in enumerate(image_urls):
+    for image_idx, image_url in enumerate(article.image_urls):
         # TODO (SuJiaKaun):
         # 1. Check is there any another type of images (ex: png) to download?
         # 2. Skip invalid images, such as small logo, empty images.
@@ -87,13 +84,13 @@ def rank_article_images(
     scores = sorted(scores, key=lambda r: r[2], reverse=True)
 
     return {
-        'title': title,
+        'title': article.title,
         'scores': scores,
     }
 
 
 def main(args):
-    articles = load_jsonl(args.data)
+    articles = load_articles(args.data)
 
     image_captioning = ImageCaptioning(
         args.caption_rnn,
@@ -104,6 +101,8 @@ def main(args):
 
     for article_idx, article in enumerate(articles):
         out_dir = os.path.join(args.output, str(article_idx))
+
+        mkdir_p(out_dir)
 
         try:
             result = rank_article_images(
