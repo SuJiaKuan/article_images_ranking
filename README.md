@@ -6,9 +6,12 @@ Ranking for representative images in a Pixnet article.
 
 Install following packages for Python 3:
 
+- beautifulsoup4==4.9.1
 - chainer==1.24.0
+- lxml==4.5.2
 - numpy==1.18.1
 - pandas==1.1.1
+- requests==2.23.0
 - tensorflow==2.2.0
 - tensorflow_hub==0.8.0
 - tensorflow_text==2.2.1
