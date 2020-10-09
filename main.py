@@ -87,7 +87,7 @@ def rank_article_images(
 
         scores.append((image_path, image_url.url, sentence, similarity))
 
-    scores = sorted(scores, key=lambda r: r[2], reverse=True)
+    scores = sorted(scores, key=lambda r: r[3], reverse=True)
 
     return {
         'title': article.title,
