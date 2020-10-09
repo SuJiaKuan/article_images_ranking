@@ -18,7 +18,7 @@ def parse_args():
     parser.add_argument(
         'data',
         type=str,
-        help='Path to the Pixnet articles JSON Lines file',
+        help='Path to the Pixnet articles file',
     )
     parser.add_argument(
         '--caption_rnn',
