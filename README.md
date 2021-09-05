@@ -21,7 +21,7 @@ Install following packages for Python 3:
 * Clone the project
 
 ```bash
-git clone https://gitlab.com/bataw/article_images_ranking
+git clone https://github.com/SuJiaKuan/article_images_ranking
 ```
 
 * Change to the project directory
